@@ -1,20 +1,33 @@
 ---
 name: child-simple-line-art
-description: Convert supplied images into clean, friendly children's simple line drawings with recognizable silhouettes, minimal detail, and optional flat pastel colors. Use when the user asks for 儿童简笔画、幼儿画、简单线稿、绘本线稿, or a cute simplified redraw of an image.
+description: Convert supplied images into stable, friendly children's simple line drawings with recognizable silhouettes, slightly richer picture-book detail, and optional flat pastel colors. Use when the user asks for 儿童简笔画、幼儿画、简单线稿、绘本线稿、童真童趣风, or a cute simplified redraw of an image.
 ---
 
 # Child Simple Line Art
 
 Turn an attached or supplied image into a simple children's drawing while keeping the main subject recognizable.
 
+For every conversion, read [references/style-guide.md](references/style-guide.md) and use it as the fixed style contract. Keep the style rules stable; only adapt the subject, composition, palette, and a small amount of detail to the supplied image.
+
 ## Visual direction
 
-- Use a clean white, warm-white, or very light pastel background.
-- Draw with smooth dark charcoal or black lines, rounded joins, simple contours, and a friendly hand-drawn feel.
-- Keep the image low-complexity: use only the lines needed to identify the subject.
-- Use flat fills in no more than five soft colors when color is helpful; otherwise use line art only.
+- Use a clean white, warm-white, or very light pastel background with a gentle picture-book feeling.
+- Draw with medium-weight dark charcoal lines, rounded joins, smooth contours, and a controlled hand-drawn feel. Lines may have tiny natural variation, but must not become messy or shaky.
+- Keep the image simple but not empty: use a clear outer contour, a few important interior lines, and limited childlike details that support recognition.
+- Use flat fills in two to five soft pastel colors, plus the paper background. Prefer one gentle warm accent such as butter yellow, peach, coral, or ochre; avoid rainbow coloring.
+- Make it mildly playful by using rounded shapes, friendly proportions, soft highlights, and small organic details such as simple leaves, clouds, or flower marks only when they are implied by the source.
+- Keep shading flat or very lightly textured. Do not use gradients, glossy effects, photorealistic rendering, or dense crosshatching.
 - Preserve the main silhouette, pose, object count, landmark features, and overall composition unless the user asks for a new arrangement.
 - Simplify texture, small background objects, reflections, facial detail, and architectural detail into a few readable marks.
+
+## Stability rules
+
+- Before writing the image prompt, classify the source as people, animal, object, building, landscape, or collage/split layout.
+- Identify three to six invariants that must survive the conversion, such as subject count, pose, silhouette, landmark shape, horizon, roofline, or panel arrangement.
+- Keep the same style block for every image. Only change the subject description, preserved invariants, palette, and the amount of optional detail.
+- Preserve the source orientation and composition by default. If the source is a collage or contains a before/after layout, keep the panel structure unless the user explicitly asks for a new layout.
+- Use a mild playful treatment by default. Increase the childlike feeling through rounded contours and gentle color accents, not through random stickers, extra characters, or invented scenery.
+- After generation, apply the quality gate in the style guide. If it fails, regenerate at most once with one targeted correction instead of changing the whole style.
 
 ## Subject handling
 
@@ -32,18 +45,21 @@ Turn an attached or supplied image into a simple children's drawing while keepin
 ## Workflow
 
 1. Inspect the supplied image before editing and identify the main subject, orientation, composition, and important visible features.
-2. Use the supplied image as the edit target and pass it to the built-in image-generation tool.
-3. Apply the visual direction above, explicitly stating what must remain recognizable and what may be simplified.
-4. Inspect the result at full size and thumbnail size. If the subject is unclear or the drawing is too detailed, regenerate once with simpler contours and fewer colors.
-5. Return the finished raster image and a short note describing the preserved subject and chosen line/color treatment.
+2. Classify the source and write down three to six invariants before prompting.
+3. Use the supplied image as the edit target and pass it to the built-in image-generation tool.
+4. Apply the fixed style contract, explicitly stating what must remain recognizable, what may be simplified, and which childlike details are allowed.
+5. Inspect the result at full size and thumbnail size using the quality gate. If one criterion fails, regenerate once with that criterion as the only targeted correction.
+6. Return the finished raster image and a short note describing the preserved subject and chosen line/color treatment.
 
 ## Default prompt shape
 
 Use a prompt like this, adapting the subject to the actual image:
 
 ```text
-Convert the supplied image into a clean children's simple line drawing. Keep the main subject, silhouette, pose, object count, and key identifying features recognizable. Use smooth rounded dark outlines, very few interior lines, simple flat shapes, and at most five soft pastel colors on a clean white or warm-white background. Simplify secondary details and background clutter. Keep the original composition unless a new layout is requested. No extra objects, no realistic rendering, no gradients, no complex shading, no decorative text, no logo, no watermark.
+Convert the supplied image into a stable, clean children's picture-book line drawing with a mildly playful, childlike feeling. Keep the main subject, silhouette, pose, object count, orientation, composition, and key identifying features recognizable. Use medium-weight rounded dark charcoal outlines, smooth friendly contours, a few purposeful interior lines, simple flat shapes, and two to five soft pastel colors on a clean white or warm-white paper background. Add only subtle childlike cues such as rounded forms, soft highlights, or small organic marks already implied by the source. Simplify secondary details and background clutter. No extra characters, props, stickers, scenery, invented text, logo, or watermark; no photorealism, gradients, glossy effects, dense shading, or messy sketching.
 ```
+
+When the user asks for “更童真”“更童趣” or similar, keep the same stable style contract and use the playful variation in the style guide: slightly rounder shapes, warmer accent colors, and a few more readable details, while retaining the original subject and layout.
 
 ## Output
 
