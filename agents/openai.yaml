@@ -1,0 +1,7 @@
+interface:
+  display_name: "儿童简笔画转换"
+  short_description: "Convert images into friendly children's simple line art"
+  default_prompt: "Use $child-simple-line-art to convert this image into a clean, friendly children's simple line drawing."
+
+policy:
+  allow_implicit_invocation: true
